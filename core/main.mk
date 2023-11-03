@@ -255,6 +255,10 @@ ifdef TARGET_RECOVERY_DEFAULT_ROTATION
 ADDITIONAL_VENDOR_PROPERTIES += \
     ro.minui.default_rotation=$(TARGET_RECOVERY_DEFAULT_ROTATION)
 endif
+ifdef TARGET_RECOVERY_DEFAULT_TOUCH_ROTATION
+ADDITIONAL_VENDOR_PROPERTIES += \
+    ro.minui.default_touch_rotation=$(TARGET_RECOVERY_DEFAULT_TOUCH_ROTATION)
+endif
 ifdef TARGET_RECOVERY_OVERSCAN_PERCENT
 ADDITIONAL_VENDOR_PROPERTIES += \
     ro.minui.overscan_percent=$(TARGET_RECOVERY_OVERSCAN_PERCENT)
@@ -467,6 +471,10 @@ ADDITIONAL_SYSTEM_PROPERTIES += net.bt.name=Android
 
 # This property is set by flashing debug boot image, so default to false.
 ADDITIONAL_SYSTEM_PROPERTIES += ro.force.debuggable=0
+
+# ------------------------------------------------------------
+# Include vendor specific additions to build properties
+-include vendor/lineage/build/core/main.mk
 
 # ------------------------------------------------------------
 # Define a function that, given a list of module tags, returns

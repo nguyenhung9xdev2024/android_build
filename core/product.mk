@@ -22,6 +22,9 @@ _product_single_value_vars :=
 # Variables that are lists of values.
 _product_list_vars :=
 
+# Add support to override build.prop values
+_product_list_vars += PRODUCT_BUILD_PROP_OVERRIDES
+
 _product_single_value_vars += PRODUCT_NAME
 _product_single_value_vars += PRODUCT_MODEL
 _product_single_value_vars += PRODUCT_NAME_FOR_ATTESTATION
@@ -246,6 +249,16 @@ _product_list_vars += PRODUCT_CFI_EXCLUDE_PATHS
 
 # Whether any paths should have HWASan enabled for components
 _product_list_vars += PRODUCT_HWASAN_INCLUDE_PATHS
+
+# Whether any paths should have Memtag_heap enabled for components
+_product_list_vars += PRODUCT_MEMTAG_HEAP_ASYNC_INCLUDE_PATHS
+_product_list_vars += PRODUCT_MEMTAG_HEAP_ASYNC_DEFAULT_INCLUDE_PATHS
+_product_list_vars += PRODUCT_MEMTAG_HEAP_SYNC_INCLUDE_PATHS
+_product_list_vars += PRODUCT_MEMTAG_HEAP_SYNC_DEFAULT_INCLUDE_PATHS
+_product_list_vars += PRODUCT_MEMTAG_HEAP_EXCLUDE_PATHS
+
+# Whether this product wants to start with an empty list of default memtag_heap include paths
+_product_single_value_vars += PRODUCT_MEMTAG_HEAP_SKIP_DEFAULT_PATHS
 
 # Whether the Scudo hardened allocator is disabled platform-wide
 _product_single_value_vars += PRODUCT_DISABLE_SCUDO
@@ -507,9 +520,11 @@ _readonly_late_variables := \
 
 # Modified internally in the build system
 _readonly_late_variables += \
+  PRODUCT_CFI_INCLUDE_PATHS \
   PRODUCT_COPY_FILES \
   PRODUCT_DEX_PREOPT_NEVER_ALLOW_STRIPPING \
   PRODUCT_DEX_PREOPT_BOOT_FLAGS \
+  PRODUCT_SOONG_NAMESPACES
 
 _readonly_early_variables := $(filter-out $(_readonly_late_variables),$(_product_var_list))
 
